@@ -64,6 +64,14 @@ public class HookDetector extends BaseDetector {
 
         }
     }
+    /**
+     * Reads the numeric TracerPid field from /proc/self/status.
+     *
+     * TracerPid == 0 means that no ptrace tracer is attached; a non-zero value
+     * is the tracer process PID and is reported as suspicious. Do not confuse
+     * this field with NoNewPrivs: they are separate status fields, and neither
+     * value is an APatch-specific magic number by itself.
+     */
     public void hasTracerPid() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader("/proc/self/status"));
